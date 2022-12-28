@@ -1,8 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Products } from 'src/entities/products.entity';
-import { CreateProducts } from 'src/dto/products.dto';
+import { Injectable, NotFoundException, Inject } from '@nestjs/common';
+import { Products } from 'src/products/entities/products.entity';
+import { CreateProducts, UpdateProducts } from 'src/products/dtos/products.dtos';
+import config from 'config';
+import { ConfigType } from '@nestjs/config';
 @Injectable()
 export class ProductsService {
+  constructor(
+    @Inject(config.KEY) private configService: ConfigType<typeof config>,
+  ) {}
   private counterId = 1;
   private products = [
     {
@@ -13,6 +18,8 @@ export class ProductsService {
   ];
 
   getAll(): Products[] {
+    console.log(this.configService.api_key);
+    console.log(this.configService.database.name);
     return this.products;
   }
   getOne(id: number): Products {
@@ -28,7 +35,7 @@ export class ProductsService {
     this.products.push(newProduct);
     return newProduct;
   }
-  updateOne(id: number, payload: any): Products {
+  updateOne(id: number, payload: UpdateProducts): Products {
     const product = this.getOne(id);
     const index = this.products.findIndex((product) => product.id === id);
     this.products[index] = { ...payload, ...product };

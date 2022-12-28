@@ -10,9 +10,16 @@ import {
   HttpStatus,
   ParseIntPipe,
 } from '@nestjs/common';
-import { ProductsService } from 'src/services/products/products.service';
-import { Products } from 'src/entities/products.entity';
-import { CreateProducts } from 'src/dto/products.dto';
+import { ApiTags } from '@nestjs/swagger';
+
+import { ProductsService } from '../services/products.service';
+import { Products } from 'src/products/entities/products.entity';
+import {
+  CreateProducts,
+  UpdateProducts,
+} from 'src/products/dtos/products.dtos';
+
+@ApiTags('products')
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
@@ -32,7 +39,7 @@ export class ProductsController {
     return 'hello';
   }
   @Put(':id')
-  updateOne(): string {
+  updateOne(@Body() payload: UpdateProducts): string {
     return 'hello';
   }
   @Post()
