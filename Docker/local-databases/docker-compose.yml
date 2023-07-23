@@ -1,0 +1,19 @@
+version: '3'
+services:
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    platform: linux/amd64
+    image: rediscommander/redis-commander
+    restart: always
+    environment:
+      - REDIS_HOSTS=redis-15463.c14.us-east-1-2.ec2.cloud.redislabs.com:15463
+      - REDIS_PASSWORD=abc1234
+    ports:
+    - "8081:8081"
+  
