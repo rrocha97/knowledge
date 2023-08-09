@@ -1,7 +1,0 @@
-node_modules
-# Ignore SQLite
-*.db
-*.db-journal
-
-# Ignore env
-.env

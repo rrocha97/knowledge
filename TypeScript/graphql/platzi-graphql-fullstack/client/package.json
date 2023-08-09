@@ -3,8 +3,5 @@
   "version": "0.1.0",
   "description": "Frontend de nuestra aplicación con Next.js",
   "main": "index.js",
-  "license": "MIT",
-  "scripts": {
-    "build": "echo 'Done'"
-  }
+  "license": "MIT"
 }
