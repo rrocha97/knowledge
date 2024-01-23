@@ -1,0 +1,75 @@
+
+type Query{
+  hello: String!
+  products: [Product!]!
+  product(id:ID!): Product
+  category(id:ID!):Category
+  categories: [Category]
+}
+
+type Mutation{
+  addProduct(dto:CreateProductInput!): Product
+  updateProduct(id: ID!,dto:UpdateProductInput!): Product
+  deleteProduct(id:ID!): ID
+  login(email:String!, password:String!): AuthResponse
+  addCategory(dto:addCategoryInput): Category
+}
+
+interface IBaseEntity {
+  id: ID!
+  createdAt:String!
+  updatedAt:String
+  deletedAt:String
+}
+
+type Product implements IBaseEntity{
+  id: ID!
+  createdAt:String!
+  updatedAt:String
+  deletedAt:String
+
+  name:String!
+  price:Float!
+  descriptions:String!
+  image:String!
+  categoryId:ID
+  category:Category
+}
+type Category{
+  id: ID!
+  name:String!
+  image:String!
+  products:[Product]
+}
+
+input CreateProductInput{
+  id: ID!
+  name:String!
+  price:Float!
+  descriptions:String!
+  image:String!
+  categoryId:ID!
+}
+input UpdateProductInput{
+  name:String!
+  price:Float!
+  descriptions:String!
+  image:String!
+  categoryId:ID!
+}
+input addCategoryInput{
+  name:String!
+  image:String!
+}
+
+type AuthResponse {
+  access_token:String!
+  user: User!
+}
+
+type User {
+  id: String!
+  email: String!
+  role: String!
+  createdAt: String
+}
