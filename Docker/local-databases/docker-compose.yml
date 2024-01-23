@@ -1,19 +1,27 @@
-version: '3'
+version: "3.7"
+
 services:
+
   redis:
-    container_name: redis
-    hostname: redis
-    image: redis
+    image: redis:latest
+    platform: linux/amd64
+    ports:
+      - 6379:6379
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
 
   redis-commander:
-    container_name: redis-commander
-    hostname: redis-commander
     platform: linux/amd64
-    image: rediscommander/redis-commander
-    restart: always
+    image: rediscommander/redis-commander:latest
     environment:
-      - REDIS_HOSTS=redis-15463.c14.us-east-1-2.ec2.cloud.redislabs.com:15463
-      - REDIS_PASSWORD=abc1234
+      - REDIS_HOSTS=local:redis:6379
+      # - HTTP_USER=root
+      # - HTTP_PASSWORD=qwerty
     ports:
-    - "8081:8081"
-  
+      - 8081:8081
+    depends_on:
+      - redis
+    
+volumes:
+  redis-data:
